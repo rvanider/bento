@@ -148,6 +148,9 @@
         "scripts/centos/networking.sh",
         "scripts/common/vagrant.sh",
         "scripts/common/vmtools.sh",
+        "scripts/rvanider/zeroboot.sh",
+        "scripts/rvanider/parallels.sh",
+        "scripts/rvanider/cleanup.sh",
         "scripts/centos/cleanup.sh",
         "scripts/common/minimize.sh"
       ],
