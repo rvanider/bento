@@ -23,6 +23,9 @@ virtualbox-iso|virtualbox-ovf)
     echo 'virtio_balloon_load="YES"' >>/boot/loader.conf;
     echo 'if_vtnet_load="YES"' >>/boot/loader.conf;
 
+    # Don't waste 10 seconds waiting for boot
+    echo 'autoboot_delay="-1"' >>/boot/loader.conf;
+
     echo 'ifconfig_vtnet0_name="em0"' >>/etc/rc.conf;
     echo 'ifconfig_vtnet1_name="em1"' >>/etc/rc.conf;
     echo 'ifconfig_vtnet2_name="em2"' >>/etc/rc.conf;
@@ -44,7 +47,17 @@ vmware-iso|vmware-vmx)
     mdconfig -a -t vnode -f $HOME_DIR/freebsd.iso -u 0;
     mount -t cd9660 /dev/md0 /tmp/vmfusion;
     tar xzf /tmp/vmfusion/vmware-freebsd-tools.tar.gz -C /tmp/vmfusion-archive;
-    /tmp/vmfusion-archive/vmware-tools-distrib/vmware-install.pl --force-install;
+
+    VER="`cat /tmp/vmfusion/manifest.txt | cut -f2 -d'"'`";
+    MAJ_VER="`echo ${VER} | cut -d'.' -f1`";
+    echo "VMware Tools Version: $VER";
+
+    if [ "${MAJ_VER}" -lt "10" ]; then
+        /tmp/vmfusion-archive/vmware-tools-distrib/vmware-install.pl --default;
+    else
+        /tmp/vmfusion-archive/vmware-tools-distrib/vmware-install.pl --force-install;
+    fi
+
     echo 'ifconfig_vxn0="dhcp"' >>/etc/rc.conf;
     umount /tmp/vmfusion;
     rm -rf /tmp/vmfusion;

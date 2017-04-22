@@ -1,9 +1,21 @@
+dist: trusty
 sudo: false
 
-rvm:
-  - 2.2
+env:
+  - PACKER_VERSION="0.12.2"
 
-before_install: wget --no-check-certificate https://releases.hashicorp.com/packer/0.9.0/packer_0.9.0_linux_amd64.zip && unzip -d packer packer_0.9.0_linux_amd64.zip
+rvm:
+  - 2.3.1
+
+branches:
+  only:
+    - master
+
+before_install:
+  - wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip
+  - unzip -d packer packer_${PACKER_VERSION}_linux_amd64.zip
+  - touch VMwareTools-10.1.0-4449150.tar.gz
+
 before_script: export PATH=$PATH:$PWD/packer
 
-script: ./bin/bento normalize
+script: bento normalize
