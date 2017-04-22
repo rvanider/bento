@@ -150,6 +150,9 @@
         "scripts/common/virtualbox.sh",
         "scripts/common/vmware.sh",
         "scripts/common/parallels.sh",
+        "scripts/rvanider/zeroboot.sh",
+        "scripts/rvanider/parallels.sh",
+        "scripts/rvanider/cleanup.sh",
         "scripts/centos/cleanup.sh",
         "scripts/common/minimize.sh"
       ],
